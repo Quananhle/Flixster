@@ -1,7 +1,7 @@
 package me.rlxu.flixster;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +17,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 import me.rlxu.flixster.models.Config;
 import me.rlxu.flixster.models.Movie;
@@ -36,7 +38,7 @@ public class MovieListActivity extends AppCompatActivity {
     // list of currently playing movies
     ArrayList<Movie> movies;
     // the recycler view
-    RecyclerView rvMovies;
+    @BindView(R.id.rvMovies) RecyclerView rvMovies;
     // adapter for recycler view
     MovieAdapter adapter;
     // Config object
@@ -46,13 +48,14 @@ public class MovieListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
+        // start Butterknife
+        ButterKnife.bind(this);
         // initialize client
         client = new AsyncHttpClient();
         // initialize list of movies
         movies = new ArrayList<>();
         // initialize adapter
         adapter = new MovieAdapter(movies);
-        rvMovies = findViewById(R.id.rvMovies);
         rvMovies.setLayoutManager(new LinearLayoutManager(this));
         rvMovies.setAdapter(adapter);
         // get the configuration on app creation
